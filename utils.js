@@ -95,10 +95,39 @@ async function startEvents(client, commands) {
     }
 }
 
+/**
+ * toNormalized removes irregular characters from a string.
+ * @param {string} string The string to normalize.
+ * @return {string} The normalized string.
+ */
+function toNormalized(string) {
+    if (string === void (0) || string === null) {
+        return;
+    }
+    return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+
+/**
+ * Remove unwanted characters from a number. Does not remove whitespaces.
+ * @param {*} n Number
+ * @param {*} isInt Should it also remove punctuation?
+ * @returns Cleaned number (int or float depending on `isInt`)
+ */
+function cleanNumber(n, isInt) {
+    n.replace(/[^0-9\s,.]/g, "");
+    if (!isInt) {
+        return parseInt(n);
+    }
+    return parseFloat(n.replace(/[.,]/g, ""));
+}
+
 
 export {
     getCommandFiles,
     sleep,
     startJobs,
-    startEvents
+    startEvents,
+    toNormalized,
+    cleanNumber
 };

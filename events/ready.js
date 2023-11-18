@@ -14,6 +14,10 @@ export default {
 
         const client_id = client.user.id;
 
+        if (process.env.npm_lifecycle_event === "clean") {
+            return;
+        }
+
         if (process.env.npm_lifecycle_event === "clearcommands") {
             console.log("Clearing global commands...");
             await client.user.setStatus("dnd");
