@@ -38,7 +38,6 @@ export default {
         import("../openai.js");
 
         // Jobs
-        console.log("Starting jobs...");
         await startJobs(client);
 
         // Registering commands

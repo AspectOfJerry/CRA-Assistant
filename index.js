@@ -4,7 +4,11 @@ import {config} from "dotenv";
 
 config()
 
-console.log(">>> The bot was started! <<<");
+
+console.log("> Starting ExpressJS web server...");
+import("./express.js");
+
+console.log("> Starting Discord bot...");
 
 const client = new Client({
     intents: [
@@ -43,3 +47,6 @@ const client = new Client({
 
     await client.login(process.env.DISCORD_BOT_TOKEN);
 })();
+
+
+export {client};
