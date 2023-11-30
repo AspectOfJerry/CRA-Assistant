@@ -33,7 +33,9 @@ app.use((err, req, res, next) => {
     });
 });
 
+const PORT = 3003;
+const HOST = "0.0.0.0";  // Listen on all available network interfaces
 
-app.listen(process.env.PORT || 3003, () => {
-    console.log("Server is listening on port 3003");
+app.listen(process.env.PORT || PORT || 3003, HOST, () => {
+    console.log("Server is listening on http://${HOST}:${PORT}");
 });
