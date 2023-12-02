@@ -10,7 +10,7 @@ console.log("Created OpenAI!")
 /**
  * @param {Object} message The prompt to prompt
  */
-export async function chatCompletion(message, client) {
+export async function chatCompletion(message) {
     try {
         const username = toNormalized(message.member?.nickname) ?? toNormalized(message.author.username);
         const prompt = message.content.slice(4);
@@ -23,7 +23,6 @@ export async function chatCompletion(message, client) {
         const msg = await message.reply({embeds: [requesting]});
         message.channel.sendTyping();
 
-        // Removed the stream: true option
         const completion = await openai.chat.completions.create({
             model: "gpt-3.5-turbo-1106",
             messages: [
@@ -32,9 +31,9 @@ export async function chatCompletion(message, client) {
                     content: "You are Discord bot named \"CRA Assistant\. \"CRA\" stands for \"College Regina Assumpta\" which is an \"ecole secondaire\" in Quebec." +
                         " You do not have access to a message history so expect the lack of context"
                 },
-                {role: "assistant", content: `${prompt}`, name: `${username.replaceAll(" ", "_")}`}
+                {role: "user", content: `${prompt}`, name: `${username.replaceAll(" ", "_")}`}
             ],
-            temperature: 1,
+            temperature: 0.95,
             max_tokens: 1024,
             n: 1,
         });
@@ -69,5 +68,33 @@ export async function chatCompletion(message, client) {
         } else {
             console.log(err.message);
         }
+    }
+}
+
+export async function emailRewriter(input) {
+    try {
+        const completion = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo-1106",
+            messages: [
+                {
+                    role: "system",
+                    content: "Vous êtes un announcement bot pour le serveur Discord d'un groupe d'école secondaire (Collège Régina Assumpta) au Québec." +
+                        " Vous devrez rédiger un message basé sur un e-mail et vous assurer que tout est clair et concis, dans une ambiance enthousiaste, dynamique, positive et plutôt drôle, ou sérieux si il est nécessaire." +
+                        " Adressez-le au groupe 401 (le meilleur des 13 autres), et ajoutez-y votre touche personnelle (emojis)!" +
+                        " Utilisez le markdown pour les éléments importants (ne modifiez pas les urls) et les headers (#-###) pour des titres." +
+                        " Donnez l'impression que les professeurs veulent s'adresser aux élèves d'une manière similaire à celle-ci: \"Le professeur veut vous faire savoir que...\"." +
+                        " Ajoutez une note pour dire que le e-mail original a été modifié par vous même, CRA-Assistant."
+                },
+                {role: "user", content: `${input}`}
+            ],
+            temperature: 0.8,
+            max_tokens: 512,
+            n: 1,
+        });
+
+        return completion.choices[0].message.content;
+    } catch (err) {
+        console.log(err.message);
+        throw err;
     }
 }

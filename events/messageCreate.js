@@ -17,7 +17,7 @@ export default {
 
         // gpt_prefixes.some(prefix => message.content.startsWith(prefix))
         if (message.content.startsWith(gpt_prefixes) && !message.author.bot && gpt_channels.includes(message.channel.id)) {
-            chatCompletion(message, message.client);
+            chatCompletion(message);
         }
 
         /*

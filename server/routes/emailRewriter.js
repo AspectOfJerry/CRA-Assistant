@@ -1,6 +1,6 @@
 import express from "express";
-import {sendMessage} from "../../controllers/controllers.js";
 import createError from "http-errors";
+import {rewriteEmail} from "../../controllers/controllers.js";
 
 const router = express.Router();
 
@@ -11,7 +11,7 @@ router.post("/", (req, res, next) => {
         return next(createError(400, "Values for channel or message are missing in the request body"));
     }
 
-    sendMessage(channel, message, res, next);
+    rewriteEmail(channel, message, res, next);
 });
 
 export default router;

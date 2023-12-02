@@ -14,7 +14,7 @@ const apiAuthMidware = (req, res, next) => {
     console.log(` User-Agent: ${blue + (req.get("User-Agent") || "unknown") + reset}`);
     console.log(` to: ${yellow + req.originalUrl + reset}`);
 
-    const valid_keys = ["secret_key"];
+    const valid_keys = ["secret_key_jerrydev100", "AaGsVlMmMjAnMzVjRmNmSmJlDnJpJsJoKaZ"];
 
     const api_key = req.query["api_key"];
 
