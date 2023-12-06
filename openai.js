@@ -20,7 +20,7 @@ export async function chatCompletion(message) {
         .setTitle(`${prompt.length > 256 ? prompt.slice(0, 256 - 3) + "..." : prompt}`)
         .setDescription("*Generating response... This may take a while depending on complexity.*");
 
-        const msg = await message.reply({embeds: [requesting]});
+        await message.reply({embeds: [requesting], ephemeral: true});
         message.channel.sendTyping();
 
         const completion = await openai.chat.completions.create({
