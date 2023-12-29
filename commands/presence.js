@@ -18,7 +18,27 @@ export default {
             ["Watching", "WATCHING"],
             ["Competing in", "COMPETING"]
             // Bots cannot use the "CUSTOM" type
-        ])),
+        ]))
+    .addStringOption((option) =>
+        option
+        .setName("text")
+        .setDescription("[REQUIRED] The text to show after the type.")
+        .setRequired(true))
+    .addStringOption((option) =>
+        option
+        .setName("status")
+        .setDescription("[REQUIRED] The status of the bot.")
+        .setRequired(true)
+        .addChoices([
+            ["Online", "online"],
+            ["Idle", "idle"],
+            ["Do not disturb", "dnd"]
+        ]))
+    .addStringOption((option) =>
+        option
+        .setName("url")
+        .setDescription("[OPTIONAL] A YouTube or Twitch URL, required if the type is Streaming.")
+        .setRequired(false)),
     async execute(client, interaction) {
         if (!["611633988515266562"].includes(interaction.user.id)) {
             return;

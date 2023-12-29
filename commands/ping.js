@@ -32,8 +32,7 @@ export default {
             .setTitle("Pong!")
             .addFields(
                 {name: "Bot latency", value: `~${clientLatency}ms`, inline: true},
-                {name: "Discord API latency", value: `~${webSocketLatency}ms`, inline: true},
-                {name: "WebSocket status", value: `code ${client.ws.status}`, inline: false}
+                {name: "Discord API latency", value: `~${webSocketLatency}ms`, inline: true}
             );
 
             interaction.reply({embeds: [pong], components: [row]});
